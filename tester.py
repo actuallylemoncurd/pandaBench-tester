@@ -37,6 +37,10 @@ while True:
     p.can_send(0x4A0, "b804ba04aa04b604", 0)
     p.can_send(0x4A0, "60045e044e045c04", 0)
 
+    # junk test msg's
+    p.can_send(0x4A6, "b804ba04aa04b604", 0)
+    p.can_send(0x4A6, "60045e044e045c04", 0)
+
     can_recv = p.can_recv()
     time.sleep(0.01)
     if len(can_recv) > 0:
