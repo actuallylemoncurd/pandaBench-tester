@@ -1,10 +1,15 @@
 import time
 import csv
-from panda import Panda
-p = Panda()
+outOfEnvironment = False
+try:
+    from panda import Panda
+    p = Panda()
+except:
+    outOfEnvironment = True
 
-w = open('benchtestResults.csv', 'w')
-writer = csv.writer(w)
+if not outOfEnvironment:
+    w = open('benchtestResults.csv', 'w')
+    writer = csv.writer(w)
 
 # addr, data, bus
 # can 0 is our feed data onto CAR PT can
@@ -14,18 +19,25 @@ writer = csv.writer(w)
 
 with open('ocelot_j533-testData.csv', 'r') as testData:
     reader = csv.reader(testData)
-    for row in reader:
-        p.can_clear(0xFFFF)
-        p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
-        addr = hex(int(row[0]))
-        dat = str(row[1])
-        if int(row[0]) == 1386:
-            p.can_send(addr, f'"{dat}"', 2)
-            #print(addr, f'"{dat}"', 2)
-        else:
-            p.can_send(addr, f'"{dat}"', 0)
-            #print(addr, f'"{dat}"', 0)
-        can_recv = p.can_recv()
-        time.sleep(0.008) #120ish hz
-        if len(can_recv) > 0:
-           writer.writerow(can_recv)
+    if not outOfEnvironment:
+        for row in reader:
+            p.can_clear(0xFFFF)
+            p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
+            addr = hex(int(row[0]))
+            dat = str(row[1])
+            if int(row[0]) == 1386:
+                p.can_send(addr, f'"{dat}"', 2)
+            else:
+                p.can_send(addr, f'"{dat}"', 0)
+            can_recv = p.can_recv()
+            time.sleep(0.008) #120ish hz
+            if len(can_recv) > 0:
+                writer.writerow(can_recv)
+    else:
+        for row in reader:
+            addr = hex(int(row[0]))
+            dat = str(row[1])
+            if int(row[0]) == 1386:
+                print(addr, f'"{dat}"', 2)
+            else:
+                print(addr, f'"{dat}"', 0)
