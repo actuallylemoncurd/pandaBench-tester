@@ -17,16 +17,15 @@ with open('ocelot_j533-testData.csv', 'r') as testData:
     for row in reader:
         p.can_clear(0xFFFF)
         p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
-        addr = int(row[0])
-        addr = hex(addr)
+        addr = hex(int(row[0]))
         dat = str(row[1])
         if int(row[0]) == 1386:
-            p.can_send(addr, '"'+dat+'"', 2)
-            #print(addr, '"'+dat+'"', 2)
+            p.can_send(addr, f'"{dat}"', 2)
+            #print(addr, f'"{dat}"', 2)
         else:
-            p.can_send(addr, '"'+dat+'"', 0)
-            #print(addr, '"'+dat+'"', 0)
+            p.can_send(addr, f'"{dat}"', 0)
+            #print(addr, f'"{dat}"', 0)
         can_recv = p.can_recv()
-        #time.sleep(0.01)
+        time.sleep(0.008) #120ish hz
         if len(can_recv) > 0:
            writer.writerow(can_recv)
