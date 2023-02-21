@@ -7,6 +7,8 @@ try:
 except:
     outOfEnvironment = True
 
+deviceShutdown = 0
+
 if not outOfEnvironment:
     w = open('benchtestResults.csv', 'w')
     writer = csv.writer(w)
@@ -21,6 +23,7 @@ with open('ocelot_j533-testData.csv', 'r') as testData:
     reader = csv.reader(testData)
     if not outOfEnvironment:
         for row in reader:
+            deviceShutdown = 500 # 5 seconds
             p.can_clear(0xFFFF)
             p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
             addr = hex(int(row[0]))
@@ -33,6 +36,10 @@ with open('ocelot_j533-testData.csv', 'r') as testData:
             time.sleep(0.008) #120ish hz
             if len(can_recv) > 0:
                 writer.writerow(can_recv)
+        for i in deviceShutdown:        # We should see all can activity from ocelot shut off after 2 seconds
+            can_recv = p.can_recv()
+            time.sleep(0.01) #100hz
+            writer.writerow(can_recv)
     else:
         for row in reader:
             addr = hex(int(row[0]))
