@@ -15,8 +15,8 @@ writer = csv.writer(w)
 with open('ocelot_j533-testData.csv', 'r') as testData:
     reader = csv.reader(testData)
     for row in reader:
-        #p.can_clear(0xFFFF)
-        #p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
+        p.can_clear(0xFFFF)
+        p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
         addr = int(row[0])
         addr = hex(addr)
         dat = str(row[1])
