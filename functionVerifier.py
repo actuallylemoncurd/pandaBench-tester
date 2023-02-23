@@ -13,13 +13,13 @@ with open('benchtestResults.csv', 'r') as resultData:
     for row in reader:
         try:
             addr = hex(int(row[0]))
-            dat = bin(int(row[1], 16)).ljust(64, '0')
+            dat = bin(int(row[1], 16)).ljust(66, '0')
             if addr == hex(GRA_Neu):
                 #do some binary ops here to ensure proper ocelot function
-                datShifted = bin(int(dat, 2) >> 48)
-                print(f'{datShifted}')
-                print(f'{dat}')
-                print(type(datShifted))
+                GRA_Kodierinfo = bin((int(dat, 2) >> 48) & 0b0000000000000001)
+                GRA_Sender = bin((int(dat, 2) >> 44) & 0b00000000000000000011).ljust(4, '0')
+                print("GRA_Kodierinfo: " + GRA_Kodierinfo)
+                print("GRA_Sender: " + GRA_Sender)
             if addr == hex(mACC_GRA_Anziege):
                 #do some binary ops here to ensure proper ocelot function
                 pass
@@ -28,4 +28,3 @@ with open('benchtestResults.csv', 'r') as resultData:
                 pass
         except Exception as e:
             print("an exception occured" + str(e))
-            break #remove break when done testing
