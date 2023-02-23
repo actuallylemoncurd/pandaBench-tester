@@ -14,12 +14,9 @@ with open('benchtestResults.csv', 'r') as resultData:
         try:
             addr = hex(int(row[0]))
             dat = bin(int(row[1], 16)).ljust(64, '0')
-            #binDat = bin(dat).ljust(64, '0')
             if addr == hex(GRA_Neu):
                 #do some binary ops here to ensure proper ocelot function
-                datShifted = int(dat, 2)
-                datShifted >>= 48
-                datShifted = bin(datShifted)
+                datShifted = bin(int(dat, 2) >> 48)
                 print(f'{datShifted}')
                 print(f'{dat}')
                 print(type(datShifted))
