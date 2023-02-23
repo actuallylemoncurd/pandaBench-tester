@@ -18,6 +18,7 @@ if not outOfEnvironment:
 # can 1 is our gateway receive can
 # can 2 is our extended receive can
 # (0, 1, 2) for RX, (128, 129, 130) for TX
+# hex(int(row[1], 16)) <- solution for hex data fed to panda if it doesnt like str data
 
 with open('ocelot_j533-testData.csv', 'r') as testData:
     reader = csv.reader(testData)
