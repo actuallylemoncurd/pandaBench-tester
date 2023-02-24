@@ -18,8 +18,6 @@ with open('benchtestResults.csv', 'r') as resultData:
                 # Message from cruise control stalk, most important to make sure the bitflipping is correct!
                 GRA_Kodierinfo = bin((int(dat, 2) >> 48) & int(1))
                 GRA_Sender = bin((int(dat, 2) >> 44) & int(3)).ljust(4, '0')
-                print("GRA_Kodierinfo:         " + GRA_Kodierinfo)
-                print("GRA_Sender:             " + GRA_Sender)
             if addr == hex(mACC_GRA_Anziege):
                 # Message from ECU, ocelot module should be filling in the blank signals
                 ACA_StaACC = bin((int(dat, 2) >> 53) & int(7)).ljust(5, '0')
@@ -29,13 +27,6 @@ with open('benchtestResults.csv', 'r') as resultData:
                 ACA_PrioDisp = bin((int(dat, 2) >> 27) & int(3)).ljust(4, '0')
                 ACA_gemZeitl = bin((int(dat, 2) >> 20) & int(15)).ljust(6, '0')
                 ACA_Aend_Zeitluecke = bin((int(dat, 2) >> 5) & int(1))
-                print("ACA_StaACC:             " + ACA_StaACC)
-                print("ACA_AnzDisplay:         " + ACA_AnzDisplay)
-                print("ACA_Zeitluecke:         " + ACA_Zeitluecke)
-                print("ACA_V_Wunsch:           " + ACA_V_Wunsch)
-                print("ACA_PrioDisp:           " + ACA_PrioDisp)
-                print("ACA_gemZeitl:           " + ACA_gemZeitl)
-                print("ACA_Aend_Zeitluecke:    " + ACA_Aend_Zeitluecke)
             if addr == hex(mACC_System):
                 #do some binary ops here to ensure proper ocelot function
                 pass
