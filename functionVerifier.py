@@ -1,6 +1,4 @@
-# todo: make this file automatically compare results data vs feed data when ran and spit out a pass / fail for the module
-# convert only the messages we manipulate into binary, parse that data to verify ocelot did what we want
-# make sure the other normal message's made it through the ocelot filter
+# todo: now that all the signals are here, add some conditionals to parse their outputs, and give a pass fail for module functionality
 
 import csv
 
