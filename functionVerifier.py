@@ -28,7 +28,15 @@ with open('benchtestResults.csv', 'r') as resultData:
                 ACA_gemZeitl = bin((int(dat, 2) >> 20) & int(15)).ljust(6, '0')
                 ACA_Aend_Zeitluecke = bin((int(dat, 2) >> 5) & int(1))
             if addr == hex(mACC_System):
-                #do some binary ops here to ensure proper ocelot function
-                pass
+                # Message entirely from ocelot
+                ACS_Zaehler = bin((int(dat, 2) >> 52) & int(15)).ljust(6, '0')
+                ACS_Sta_ADR = bin((int(dat, 2) >> 50) & int(3)).ljust(4, '0')
+                ACS_StSt_Info = bin((int(dat, 2) >> 46) & int(3)).ljust(4, '0')
+                ACS_MomEingriff = bin((int(dat, 2) >> 45) & int(1))
+                ACS_Typ_ACC = bin((int(dat, 2) >> 43) & int(3)).ljust(4, '0')
+                ACS_FreigSollB = bin((int(dat, 2) >> 40) & int(1))
+                ACS_Sollbeschl = bin((int(dat, 2) >> 29) & int(2045)).ljust(13, '0')
+                ACS_zul_Regelabw = bin((int(dat, 2) >> 20) & int(255)).ljust(10, '0')
+                ACS_max_AendGrad = bin((int(dat, 2) >> 8) & int(255)).ljust(10, '0')
         except Exception as e:
             print("an exception occured" + str(e))
