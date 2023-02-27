@@ -52,7 +52,7 @@ with open('benchtestResults.csv', 'r') as resultData:
             if str(ACA_StaACC) == '000': staACCCounter = staACCCounter + 1
             if str(ACS_StSt_Info) == '1': ststinfoCounter = ststinfoCounter + 1
         except Exception as e:
-            print("an exception occured" + str(e))
+            print("an exception occured " + str(e))
     # if matrix for pass / fail
     # 1000 = 10 seconds of collective faults (100hz)
     if kodierCounter >= 1000:
@@ -68,10 +68,10 @@ with open('benchtestResults.csv', 'r') as resultData:
     else:
         print("mACC_GRA_Anziege PASS")
     if accSystemCounter <= 1000:
-        print("mACC_System FAIL, MSG not present")
-        if ststinfoCounter <= 1000:
-            print("ACS_StSt_Info was wrong "+f'{ststinfoCounter}'+" times")
+        print("mACC_System FAIL, MSG MISSING")
     else:
         print("mACC_System PRESENT")
-        if ststinfoCounter >= 1000:
-            print("ACS_StSt_Info PASS")
+    if ststinfoCounter <= 1000 and accSystemCounter >= 1000:
+        print("ACS_StSt_Info was wrong "+f'{ststinfoCounter}'+" times")
+    if ststinfoCounter >= 1000:
+        print("ACS_StSt_Info PASS")
