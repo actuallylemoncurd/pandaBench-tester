@@ -52,7 +52,8 @@ with open('benchtestResults.csv', 'r') as resultData:
             if str(ACA_StaACC) == '000': staACCCounter = staACCCounter + 1
             if str(ACS_StSt_Info) == '1': ststinfoCounter = ststinfoCounter + 1
         except Exception as e:
-            print("an exception occured " + str(e))
+            pass
+            #print("an exception occured " + str(e))
     # if matrix for pass / fail
     # 1000 = 10 seconds of collective faults (100hz)
     if kodierCounter >= 1000:
