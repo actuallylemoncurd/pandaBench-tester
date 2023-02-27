@@ -26,23 +26,27 @@ with open('ocelot_j533-testData.csv', 'r') as testData:
             dat = str(row[1])
             if int(row[0]) == 1386:
                 print(addr, f'"{dat}"', 2)
+            if int(row[0]) == 906:
+                print(addr, f'"{dat}"', 1)
             else:
                 print(addr, f'"{dat}"', 0)    
     else:
+        p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
         for row in reader:
             p.can_clear(0xFFFF)
-            p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
             addr = hex(int(row[0]))
             dat = str(row[1])
             if int(row[0]) == 1386:
                 p.can_send(addr, f'"{dat}"', 2)
+            if int(row[0]) == 906:
+                p.can_send(addr, f'"{dat}"', 1)
             else:
                 p.can_send(addr, f'"{dat}"', 0)
             can_recv = p.can_recv()
             time.sleep(0.008) #120ish hz
             if len(can_recv) > 0:
                 writer.writerow(can_recv)
-        for i in 500:        # We should see all can activity from ocelot shut off after 2 seconds
+        for i in range(500):        # We should see all can activity from ocelot shut off after 2 seconds
             can_recv = p.can_recv()
             time.sleep(0.01) #100hz
             writer.writerow(can_recv)
