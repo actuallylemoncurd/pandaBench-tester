@@ -34,7 +34,7 @@ with open('ocelot_j533-testData.csv', 'r') as testData:
         p.set_safety_mode(Panda.SAFETY_ALLOUTPUT)
         for row in reader:
             p.can_clear(0xFFFF)
-            addr = hex(int(row[0]))
+            addr = int(row[0])
             dat = hex(int(row[1], 16))
             if int(row[0]) == 1386:
                 p.can_send(addr, f'"{dat}"', 2)
