@@ -36,13 +36,12 @@ with open('ocelot_j533-testData.csv', 'r') as testData:
             p.can_clear(0xFFFF)
             addr = int(row[0])
             dat = int(row[1], 16)
-            if len(dat) > 0:
-                if int(row[0]) == 1386:
-                    p.can_send(addr, f'"{dat}"', 2)
-                if int(row[0]) == 906:
-                    p.can_send(addr, f'"{dat}"', 1)
-                else:
-                    p.can_send(addr, f'"{dat}"', 0)
+            if int(row[0]) == 1386:
+                p.can_send(addr, f'{dat}'.encode("utf-8"), 2)
+            if int(row[0]) == 906:
+                p.can_send(addr, f'{dat}'.encode("utf-8"), 1)
+            else:
+                p.can_send(addr, f'{dat}'.encode("utf-8"), 0)
             can_recv = p.can_recv()
             time.sleep(0.008) #120ish hz
             if len(can_recv) > 0:
