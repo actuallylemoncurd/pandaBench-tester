@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import time
 import argparse
-from panda import Panda
+from panda import Panda, McuType
 from panda.tests.pedal.canhandle import CanHandle
 
 
@@ -28,6 +28,6 @@ if __name__ == "__main__":
     time.sleep(0.1)
     print("flashing", args.fn)
     code = open(args.fn, "rb").read()
-    Panda.flash_static(CanHandle(p, 0), code)
+    Panda.flash_static(CanHandle(p, 0), code, mcu_type=McuType.F2)
 
   print("can flash done")
