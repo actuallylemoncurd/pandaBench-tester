@@ -39,7 +39,7 @@ def can_capnp_to_can_list(can, src_filter=1):
   return ret
 
 logs = sorted(os.listdir("new-logs"))[2:]
-lr = MultiLogIterator([f"new-logs/{log}.bz2" for log in logs], sort_by_time=True)
+lr = MultiLogIterator([f"new-logs/{log}" for log in logs], sort_by_time=True)
 
 sendcan = messaging.pub_sock('sendcan')
 
