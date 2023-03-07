@@ -5,7 +5,12 @@ import cereal.messaging as messaging
 from common.realtime import Ratekeeper
 codecs.register_error("strict", codecs.backslashreplace_errors)
 
-EPS_TX = [159, 134, 285, 810, 401604626, 452984850]
+# can 0 is our feed data onto CAR PT can
+# can 1 is our gateway receive can
+# can 2 is our extended receive can
+
+ACC_GRA = [1386]
+GRA_Neu = [906]
 
 def can_list_to_can_capnp(can_msgs, msgtype='can'):
   dat = messaging.new_message(msgtype, len(can_msgs))
@@ -20,12 +25,17 @@ def can_list_to_can_capnp(can_msgs, msgtype='can'):
     cc.src = can_msg[3]
   return dat
 
-def can_capnp_to_can_list(can, src_filter=None):
+def can_capnp_to_can_list(can, src_filter=1):
   ret = []
   for msg in can:
     if src_filter is None or msg.src in src_filter:
-        if msg.address not in EPS_TX: # exclude eps tx messages
-            ret.append((msg.address, msg.busTime, msg.dat, msg.src)) # only bus 0 is connected
+      if msg.address in ACC_GRA:
+        ret.append((msg.address, msg.busTime, msg.dat, 2))
+      if msg.address in GRA_Neu:
+        ret.append((msg.address, msg.busTime, msg.dat, 1))
+      else:
+        ret.append((msg.address, msg.busTime, msg.dat, 0))
+      #ret.append((msg.address, msg.busTime, msg.dat, msg.src))
   return ret
 
 logs = sorted(os.listdir("new-logs"))[2:]
